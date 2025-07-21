@@ -26,5 +26,3 @@ int main()
     printf("%d",factorial(1));  // Example call
     return 0;
 }
-
-
