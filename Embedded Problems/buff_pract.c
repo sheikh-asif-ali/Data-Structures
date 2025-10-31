@@ -40,12 +40,14 @@ int main()
     
     buffer_init(&buf);
     
-    for(i=0;i<BUFFER_SIZE;i++) buffer_write(&buf, i+1);
+    for(i=0;i<10;i++) buffer_write(&buf, i+1);
     
-    printf("Buffer before Pop: ");
+    printf("\nValue in Buffer: ");
     for(i=0;i<buf.count;i++) printf("%d->",buf.data[i]);
     
     printf("\nPoped: ");
+    buffer_read(&buf, &value);
+    printf("%d, ",value);
     buffer_read(&buf, &value);
     printf("%d, ",value);
     
