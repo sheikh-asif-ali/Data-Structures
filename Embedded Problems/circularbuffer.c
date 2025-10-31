@@ -35,24 +35,27 @@ bool Buff_Pop(CirBuff* buffer, int* val)
 }
 int main() {
     CirBuff cb;
-    int i, val=8;
+    int i, val;
 
     Buff_Init(&cb);
     for(i=0; i<BUFFER_SIZE; i++) Buff_Push(&cb, i);
 
     printf("Buffer contents before PoP:\n");
-    for(i=0; i<BUFFER_SIZE; i++) printf("%d ", cb.Array[i]);
+    for(i=0; i<BUFFER_SIZE; i++) printf("%d", cb.Array[i]);
+
+    printf("\nCount: %d", cb.count);
 
     Buff_Pop(&cb, &val);
     printf("\nPopped value: %d", val);
     Buff_Pop(&cb, &val);
     printf("\nPopped value: %d", val);
+
+    printf("\nCount: %d", cb.count);
 
     printf("\nRemaining value: ");
-    for(i=0; i<BUFFER_SIZE; i++) {
+    for(i=0; i<cb.count; i++) {
         Buff_Pop(&cb, &val);
         printf("%d, ", val);
     }
-
     return 0;
 }
