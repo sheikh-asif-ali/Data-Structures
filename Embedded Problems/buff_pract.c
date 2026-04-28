@@ -1,63 +1,74 @@
-#include<stdio.h>
-#include<stdint.h>
-#include<stdbool.h>
+#include <stdio.h>
+#include <stdbool.h>
 
 #define BUFFER_SIZE 8
-typedef struct {
-uint8_t data [BUFFER_SIZE];
-uint8_t head;	// write index
-uint8_t tail;	// read index
-uint8_t count;	// number of bytes in buffer
-} CircularBuffer;
 
-void buffer_init(CircularBuffer *buf)
+typedef struct {
+    int data[BUFFER_SIZE];
+    int head;  // read
+    int tail;  // write
+    int count;
+} CirBuff;
+
+void init(CirBuff* cb)
 {
-    buf->head = buf->tail = buf->count = 0;
+    cb->head = cb->tail = cb->count = 0;
 }
-bool buffer_write(CircularBuffer *buf, uint8_t value)
+
+bool push(CirBuff* cb, int val)
 {
-    if(buf->count == BUFFER_SIZE) return 1;
-    
-    buf->data[buf->head] = value ;
-    buf->head = (buf->head+1)%BUFFER_SIZE;
-    buf->count++;
-    return 0;
+    if(cb->count == BUFFER_SIZE)
+    {
+        printf("Buffer Full\n");
+        return false;
+    }
+    cb->data[cb->tail] = val;
+    cb->tail = (cb->tail + 1) % BUFFER_SIZE;
+    cb->count++;
+
+    return true;
 }
-bool buffer_read(CircularBuffer *buf, uint8_t *value)
+
+bool pop(CirBuff* cb, int *val)
 {
-    if(buf->count == 0) return 1;
-    
-    *value = buf->data[buf->tail];
-    buf->tail = (buf->tail+1)%BUFFER_SIZE;
-    buf->count--;
-    return 0;
+    if(cb->count == 0)
+        return false;
+
+    *val = cb->data[cb->head];
+    cb->head = (cb->head + 1) % BUFFER_SIZE;
+    cb->count--;
+
+    return true;
+}
+
+void printBuffer(CirBuff *cb)
+{
+    int i, idx = cb->head;
+
+    for(i = 0; i < cb->count; i++)
+    {
+        printf("%d-", cb->data[idx]);
+        idx = (idx + 1) % BUFFER_SIZE;
+    }
+    printf("\n");
 }
 
 int main()
 {
-    CircularBuffer buf;
-    uint8_t i=0,value,temp;
-    
-    buffer_init(&buf);
-    
-    for(i=0;i<10;i++) buffer_write(&buf, i+1);
-    
-    printf("\nValue in Buffer: ");
-    for(i=0;i<buf.count;i++) printf("%d->",buf.data[i]);
-    
-    printf("\nPoped: ");
-    buffer_read(&buf, &value);
-    printf("%d, ",value);
-    buffer_read(&buf, &value);
-    printf("%d, ",value);
-    
-    temp=buf.tail;
-    printf("\nRemaining: ");
-    for(i=0;i<buf.count;i++)
-    {
-        printf("%d, ",buf.data[temp]);
-        temp=(temp+1)%BUFFER_SIZE;
-    }
+    CirBuff cb;
+    int val, i;
+
+    init(&cb);
+
+    for(i = 1; i <= BUFFER_SIZE; i++)
+        push(&cb, i);
+
+    printBuffer(&cb);
+
+    pop(&cb, &val);
+    printf("Popped: %d\n", val);
+
+    printBuffer(&cb);
 
     return 0;
 }

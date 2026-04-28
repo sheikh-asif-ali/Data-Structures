@@ -14,6 +14,7 @@ bool Buff_Init(CirBuff* buffer) {
     buffer->head = 0;
     buffer->tail = 0;
     buffer->count = 0;
+    return 0;
 }
 bool Buff_Push(CirBuff* buffer, int val)
 {
@@ -40,8 +41,9 @@ int main() {
     Buff_Init(&cb);
     for(i=0; i<BUFFER_SIZE; i++) Buff_Push(&cb, i);
 
-    printf("Buffer contents before PoP:\n");
-    for(i=0; i<BUFFER_SIZE; i++) printf("%d", cb.Array[i]);
+    bool Buff_Push(CirBuff* cb, int val){
+    
+}
 
     printf("\nCount: %d", cb.count);
 
