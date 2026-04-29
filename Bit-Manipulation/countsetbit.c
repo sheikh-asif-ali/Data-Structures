@@ -1,14 +1,21 @@
-//Counting the number of set bits
+// Counting the number of set bits
 
 #include <stdio.h>
+
+int hammingWeight(int n) 
+{ 
+    int count=0; 
+    while(n) 
+    { 
+        n &= n-1;
+        count++; 
+    } 
+    return count; 
+}
 int main()
 {
-    int num = 9; //Binary of 9 is 0000 1001
-    int count = 0;  //To count the number of set bits
-    for (int i=8; i>=0;--i)
-    {
-        if((num&(1<<i))!=0) count++;
-    }
+    int n = 15; // Example number
+    int count = hammingWeight(n);
     printf("Number of set bits are %d",count);
     return 0;
 }
