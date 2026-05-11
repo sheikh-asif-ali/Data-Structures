@@ -10,7 +10,9 @@ unsigned int reverseBits(unsigned int n)
     for(int i = 0; i < bits; i++)
     {
         if(n & (1U << i))
+        {
             rev |= (1U << ((bits - 1) - i));
+        }
     }
     return rev;
 }
