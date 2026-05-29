@@ -1,4 +1,4 @@
-//Remove duplicates from an array
+//Remove duplicates from a sorted array
 #include<stdio.h>
 
 int remdup(int A[], int n){
