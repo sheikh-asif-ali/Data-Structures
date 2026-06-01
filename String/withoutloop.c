@@ -5,9 +5,7 @@ void printname(char ch[]){
     printf("%d %s \n",num, ch);
     num++;
     if(num<=100)
-    {
          printname(ch);
-    };
 }
 int main() {
     char ch[] = "Asif";
