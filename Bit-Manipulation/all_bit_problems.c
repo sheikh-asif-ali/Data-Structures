@@ -40,10 +40,38 @@ int toggle(int x, int bit)
     x = x^mask;
     return x;
 }
+int convertDec(char binary[])
+{
+    int i=0, decimal = 0;
+
+    while(binary[i] != '\0')
+    {
+        char bit = binary[i];
+        if(bit == '0')
+            decimal = (decimal<<1);
+        else if(bit == '1')
+            decimal = (decimal<<1) + 1;
+        else
+            break;
+        i++;
+    }
+    return decimal;
+}
 int main(){
-    unsigned int num = 0xABCD;
+    unsigned int num = 0xAA;
     printf("%X\n",num);
+
+    int res = swap(num);
+    printf("\nResult: %X", res);
+ 
+/*
     unsigned int swap = ( ((num&0xFF00)>>8) | ((num&0x00FF)<<8) );
     printf("%X\n",swap);
+*/
+/*
+    char bin_val[] = "1011";
+    int dec_val = convertDec(bin_val);
+    printf("Decimal Value: %d",dec_val);
+*/
     return 0;
 }
